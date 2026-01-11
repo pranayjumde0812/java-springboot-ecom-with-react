@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Primary
 public class CategoryServiceImpl implements CategoryService {
 
     private List<Category> categories = new ArrayList<>();
