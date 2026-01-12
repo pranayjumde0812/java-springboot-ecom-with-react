@@ -2,7 +2,6 @@ package com.ecommerce.app.controller;
 
 import com.ecommerce.app.dto.request.CategoryDTO;
 import com.ecommerce.app.dto.response.CategoryResponse;
-import com.ecommerce.app.model.Category;
 import com.ecommerce.app.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +29,10 @@ public class CategoryController {
     }
 
     @DeleteMapping("/admin/categories/{categoryId}")
-    public ResponseEntity<String> createCategory(@PathVariable Long categoryId) {
+    public ResponseEntity<CategoryDTO> createCategory(@PathVariable Long categoryId) {
 
-        String status = categoryService.deleteCategory(categoryId);
-        return new ResponseEntity<>(status, HttpStatus.OK);
+        CategoryDTO categoryDTO = categoryService.deleteCategory(categoryId);
+        return new ResponseEntity<>(categoryDTO, HttpStatus.OK);
 
     }
 
