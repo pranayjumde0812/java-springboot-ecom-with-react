@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -43,12 +42,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void addCategory(Category category) {
-        Category savedCategory = categoryRepository.findByCategoryName(category.getCategoryName());
-        if (savedCategory != null) {
-            throw new APIException("Category with the name " + category.getCategoryName() + " already exists");
+    public CategoryDTO addCategory(CategoryDTO categoryDTO) {
+        Category existingCategory = categoryRepository.findByCategoryName(categoryDTO.getCategoryName());
+        if (existingCategory != null) {
+            throw new APIException("Category with the name " + categoryDTO.getCategoryName() + " already exists");
         }
-        categoryRepository.save(category);
+        Category category = modelMapper.map(categoryDTO, Category.class);
+        Category savedCategory = categoryRepository.save(category);
+
+        return modelMapper.map(savedCategory, CategoryDTO.class);
     }
 
     @Override
@@ -64,14 +66,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category updateCategory(Long categoryId, Category category) {
+    public CategoryDTO updateCategory(Long categoryId, CategoryDTO categoryDTO) {
 
         Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
         if (categoryOptional.isPresent()) {
             Category categoryToUpdate = categoryOptional.get();
-            categoryToUpdate.setCategoryName(category.getCategoryName());
-            categoryRepository.save(categoryToUpdate);
-            return categoryToUpdate;
+            categoryToUpdate.setCategoryName(categoryDTO.getCategoryName());
+            Category savedCategory = categoryRepository.save(categoryToUpdate);
+            return modelMapper.map(savedCategory, CategoryDTO.class);
         } else {
             throw new ResourceNotFoundException("Category", "categoryId", categoryId);
         }
