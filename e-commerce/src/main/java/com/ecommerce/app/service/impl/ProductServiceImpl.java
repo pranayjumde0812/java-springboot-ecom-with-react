@@ -7,6 +7,7 @@ import com.ecommerce.app.model.Category;
 import com.ecommerce.app.model.Product;
 import com.ecommerce.app.repository.CategoryRepository;
 import com.ecommerce.app.repository.ProductRepository;
+import com.ecommerce.app.service.FileService;
 import com.ecommerce.app.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private FileService fileService;
 
     @Override
     public ProductDTO addProduct(Long categoryId, ProductDTO productDTO) {
@@ -133,37 +137,11 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
 
         String path = "image/";
-        String fileName = uploadImage(path, image);
+        String fileName = fileService.uploadImage(path, image);
 
         existingProduct.setImage(fileName);
         Product savedProduct = productRepository.save(existingProduct);
         return modelMapper.map(savedProduct, ProductDTO.class);
-    }
-
-    private String uploadImage(String path, MultipartFile file) throws IOException {
-
-        // File path of current file original file
-        String originalFilename = file.getOriginalFilename();
-
-        // Generate Random string
-        String randomId = UUID.randomUUID().toString();
-
-        // create new file path
-        String fileName = randomId.concat(originalFilename.substring(originalFilename.lastIndexOf(".")));
-        String filePath = path + File.separator + fileName;
-
-        // check if path exist and create
-        File folder = new File(path);
-
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
-
-        // Upload to server
-        Files.copy(file.getInputStream(), Paths.get(filePath));
-
-        // return filename
-        return fileName;
     }
 
 }
