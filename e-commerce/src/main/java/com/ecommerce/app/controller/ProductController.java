@@ -1,6 +1,7 @@
 package com.ecommerce.app.controller;
 
 import com.ecommerce.app.dto.request.ProductDTO;
+import com.ecommerce.app.model.Product;
 import com.ecommerce.app.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,10 +16,10 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/admin/categories/{categoryId}/product")
-    public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO,
+    public ResponseEntity<ProductDTO> addProduct(@RequestBody Product product,
                                                  @PathVariable Long categoryId) {
 
-        ProductDTO createdProduct = productService.addProduct(categoryId, productDTO);
+        ProductDTO createdProduct = productService.addProduct(categoryId, product);
 
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }

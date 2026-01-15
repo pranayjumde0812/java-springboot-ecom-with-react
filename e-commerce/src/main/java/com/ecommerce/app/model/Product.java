@@ -25,6 +25,10 @@ public class Product {
 
     private double specialPrice;
 
+    private double discount;
+
+    private String image;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
