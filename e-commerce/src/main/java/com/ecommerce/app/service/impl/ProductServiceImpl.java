@@ -27,7 +27,9 @@ public class ProductServiceImpl implements ProductService {
     private ModelMapper modelMapper;
 
     @Override
-    public ProductDTO addProduct(Long categoryId, Product product) {
+    public ProductDTO addProduct(Long categoryId, ProductDTO productDTO) {
+
+        Product product = modelMapper.map(productDTO, Product.class);
 
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
@@ -90,16 +92,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO updateProduct(Long productId, Product product) {
+    public ProductDTO updateProduct(Long productId, ProductDTO productDTO) {
 
         Product existingProduct = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
 
-        existingProduct.setProductName(product.getProductName());
-        existingProduct.setDescription(product.getDescription());
-        existingProduct.setQuantity(product.getQuantity());
-        existingProduct.setPrice(product.getPrice());
-        existingProduct.setDiscount(product.getDiscount());
+        existingProduct.setProductName(productDTO.getProductName());
+        existingProduct.setDescription(productDTO.getDescription());
+        existingProduct.setQuantity(productDTO.getQuantity());
+        existingProduct.setPrice(productDTO.getPrice());
+        existingProduct.setDiscount(productDTO.getDiscount());
 
         double specialPrice = existingProduct.getPrice() - (existingProduct.getDiscount() * 0.01) * existingProduct.getPrice();
 

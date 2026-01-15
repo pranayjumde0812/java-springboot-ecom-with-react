@@ -5,7 +5,7 @@ import com.ecommerce.app.dto.response.ProductResponse;
 import com.ecommerce.app.model.Product;
 
 public interface ProductService {
-    ProductDTO addProduct(Long categoryId, Product product);
+    ProductDTO addProduct(Long categoryId, ProductDTO productDTO);
 
     ProductResponse getAllProducts();
 
@@ -13,7 +13,7 @@ public interface ProductService {
 
     ProductResponse getAllProductsByKeyword(String keyword);
 
-    ProductDTO updateProduct(Long productId, Product product);
+    ProductDTO updateProduct(Long productId, ProductDTO productDTO);
 
     ProductDTO deleteProduct(Long productId);
 }
