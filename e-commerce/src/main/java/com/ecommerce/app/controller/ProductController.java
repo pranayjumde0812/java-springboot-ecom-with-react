@@ -2,7 +2,6 @@ package com.ecommerce.app.controller;
 
 import com.ecommerce.app.dto.request.ProductDTO;
 import com.ecommerce.app.dto.response.ProductResponse;
-import com.ecommerce.app.model.Product;
 import com.ecommerce.app.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
