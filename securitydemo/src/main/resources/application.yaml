@@ -4,5 +4,5 @@ spring:
 
   security:
     user:
-      name: user
+      name: admin
       password: demo123
