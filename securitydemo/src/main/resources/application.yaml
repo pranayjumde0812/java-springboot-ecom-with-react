@@ -11,3 +11,7 @@ spring:
       path: /h2-console
   datasource:
     url: jdbc:h2:mem:test
+
+  app:
+    jwtSecret: dictionary
+    jwtExpirationMS: 300000
