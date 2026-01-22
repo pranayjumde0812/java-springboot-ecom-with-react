@@ -48,7 +48,7 @@ public class GreetingsController {
         return "Hello!!!!, Admin";
     }
 
-    @PostMapping("/api/sign-in")
+    @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         Authentication authentication;
 
@@ -81,7 +81,7 @@ public class GreetingsController {
                 .map(item -> item.getAuthority())
                 .toList();
 
-        LoginResponse loginResponse = new LoginResponse(userDetails.getUsername(), jwtToken, roles);
+        LoginResponse loginResponse = new LoginResponse(jwtToken, userDetails.getUsername(), roles);
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
     }
 

@@ -13,5 +13,16 @@ spring:
     url: jdbc:h2:mem:test
 
   app:
-    jwtSecret: dictionary
-    jwtExpirationMS: 300000
+    jwtSecret: dictionary2224324uifbhfiuhbfud8958t948tihiuvhsudAHJDHJFJFNFJNJJJIJrigroeigurooisdjvdlnvjdnfkjsdhfiuehdfuidh
+    jwtExpirationMS: 6000000000
+
+logging:
+  level:
+    org:
+      springframework: DEBUG
+      springframework.security: DEBUG
+      hibernate:
+        sql: DEBUG
+    com:
+      example:
+        securitydemo: DEBUG
