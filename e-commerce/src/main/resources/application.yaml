@@ -22,5 +22,21 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.H2Dialect
 
+  app:
+    jwtSecret: dictionary2224324uifbhfiuhbfud8958t948tihiuvhsudAHJDHJFJFNFJNJJJIJrigroeigurooisdjvdlnvjdnfkjsdhfiuehdfuidh
+    jwtExpirationMS: 6000000000
+
+logging:
+  level:
+    org:
+      springframework: DEBUG
+      springframework.security: DEBUG
+      hibernate:
+        sql: DEBUG
+    com:
+      ecommerce:
+        app: DEBUG
+
 project:
   image: images/
+
