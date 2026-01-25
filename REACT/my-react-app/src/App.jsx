@@ -1,4 +1,9 @@
 import "./App.css";
+import About from "./components/About";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import ProjectList from "./components/ProjectList";
 
 // function WelcomeMessage(name) {
 //   return <h1>Hello, {name}</h1>;
@@ -92,83 +97,23 @@ import "./App.css";
 // }
 
 function App() {
-  const name = "Pranay Jumde";
-  const profession = "Full Stack Developer";
-
-  const projects = [
-    {
-      title: "Project A",
-      description: "Description of Project A",
-      link: "#",
-    },
-    {
-      title: "Project B",
-      description: "Description of Project B",
-      link: "#",
-    },
-    {
-      title: "Project C",
-      description: "Description of Project C",
-      link: "#",
-    },
-  ];
-
   return (
     <>
       <div className="App">
-        <header className="header">
-          <h1>{name}</h1>
-          <p>{profession}</p>
-          <nav>
-            <a href="#about">About</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
-          </nav>
-        </header>
+        {/* Header Component */}
+        <Header />
+
         {/* About Section */}
-        <section id="about" className="about-section">
-          <h2>About me</h2>
-          <p>
-            Hello! I am {name}, a passinate {profession}. I love building web
-            application that solves real world user problems.
-          </p>
-        </section>
+        <About />
 
         {/* Projects Section */}
-        <section id="projects" className="projects-section">
-          <h2>Projects</h2>
-          <div className="projects-list">
-            {projects.map((project, index) => (
-              <div key={index} className="projects-item">
-                <h3>{project.title}</h3>
-                <h3>{project.description}</h3>
-                <h3>
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreference"
-                  >
-                    Link
-                  </a>
-                </h3>
-              </div>
-            ))}
-          </div>
-        </section>
+        <ProjectList />
 
         {/* Contact Section */}
-        <section id="contact" className="contact-section">
-          <h2>Contact Me</h2>
-          <p>
-            If you would like toget in touch feel free to email me at:{" "}
-            <a href="mailto:pranayjumde13@gmail.com">pranayjumde13@gmail.com</a>
-          </p>
-        </section>
+        <Contact />
 
         {/* Footer */}
-        <footer className="footer">
-          <p>&copy; 2024 {name}. All rights reserved.</p>
-        </footer>
+        <Footer />
       </div>
     </>
   );
