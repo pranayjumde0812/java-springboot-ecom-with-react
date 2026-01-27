@@ -9,26 +9,31 @@ function App() {
     alert(`You clicked on hobby: ${hobby}`);
   };
 
+  // converting values to Object
+  const pranayProfile = {
+    name: "Pranay",
+    age: 24,
+    isMember: true,
+    hobbies: ["Gaming", "Cooking", "Hiking"],
+    onHobbyClick: handleHobbyClick,
+  };
+
+  const deepakProfile = {
+    name: "Deepak",
+    age: 30,
+    isMember: false,
+    hobbies: ["Photography", "Cycling"],
+    onHobbyClick: handleHobbyClick,
+  };
+
   return (
     <>
       <div className="app-container">
         <h1>Hello</h1>
         {/* <MyButton /> */}
 
-        <ProfileCard
-          name="Pranay"
-          age={24}
-          isMember={true}
-          hobbies={["Gaming", "Cooking", "Hiking"]}
-          onHobbyClick={handleHobbyClick}
-        />
-        <ProfileCard
-          name="Rahul"
-          age={30}
-          isMember={false}
-          hobbies={["Photography", "Cycling"]}
-          onHobbyClick={handleHobbyClick}
-        />
+        <ProfileCard {...pranayProfile} />
+        <ProfileCard {...deepakProfile} />
       </div>
     </>
   );
