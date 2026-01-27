@@ -32,6 +32,7 @@ function App() {
         <h1>Hello</h1>
         {/* <MyButton /> */}
 
+        {/* Passing Object as Props using spread operator */}
         <ProfileCard {...pranayProfile} />
         <ProfileCard {...deepakProfile} />
       </div>
