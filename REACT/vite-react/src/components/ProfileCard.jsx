@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 function ProfileCard({ name, age, isMember }) {
   return (
     <>
@@ -9,5 +11,11 @@ function ProfileCard({ name, age, isMember }) {
     </>
   );
 }
+
+ProfileCard.propTypes = {
+  name: PropTypes.string,
+  age: PropTypes.number,
+  isMember: PropTypes.bool.isRequired,
+};
 
 export default ProfileCard;
