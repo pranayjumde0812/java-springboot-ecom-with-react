@@ -54,6 +54,12 @@ function App() {
   const stepChangeHandler = (e) => {
     setStep(parseInt(e.target.value || "0"));
   };
+
+  const resetCounter = () => {
+    setCount(0);
+    setStep(1);
+  };
+
   return (
     <>
       <div className="app-container">
@@ -79,6 +85,7 @@ function App() {
         <br />
         <MyButton actionName={"Increment"} onClick={incrementCount} />
         <MyButton actionName={"Decrement"} onClick={decrementCount} />
+        <MyButton actionName={"Reset"} onClick={resetCounter} />
       </div>
     </>
   );
