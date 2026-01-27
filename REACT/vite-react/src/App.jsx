@@ -5,12 +5,10 @@ import ProfileCard from "./components/ProfileCard";
 import "./App.css";
 
 function App() {
-  // const hobbies1 = ["Reading", "Traveling", 1];
-
   const handleHobbyClick = (hobby) => {
     alert(`You clicked on hobby: ${hobby}`);
   };
-  
+
   return (
     <>
       <div className="app-container">
@@ -21,13 +19,15 @@ function App() {
           name="Pranay"
           age={24}
           isMember={true}
-          hobbies={hobbies1}
+          hobbies={["Gaming", "Cooking", "Hiking"]}
+          onHobbyClick={handleHobbyClick}
         />
         <ProfileCard
           name="Rahul"
           age={30}
           isMember={false}
-          hobbies={hobbies1}
+          hobbies={["Photography", "Cycling"]}
+          onHobbyClick={handleHobbyClick}
         />
       </div>
     </>
