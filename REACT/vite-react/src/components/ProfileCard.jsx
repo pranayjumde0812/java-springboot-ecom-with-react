@@ -1,7 +1,11 @@
-function ProfileCard(props) {
+function ProfileCard({ name, age, isMember }) {
   return (
     <>
-      <div>Name: {props.name}</div>
+      <div>
+        <h3>Name: {name}</h3>
+        <h3>Age: {age}</h3>
+        <h3>Status: {isMember ? "Active Member" : "Guest"}</h3>
+      </div>
     </>
   );
 }

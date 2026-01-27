@@ -12,8 +12,8 @@ function App() {
         <h1>Hello</h1>
         {/* <MyButton /> */}
 
-        <ProfileCard name="Pranay" />
-        <ProfileCard name="RAhul" />
+        <ProfileCard name="Pranay" age={24} isMember={true}/>
+        <ProfileCard name="RAhul" age={30} isMember={false}/>
       </div>
     </>
   );
