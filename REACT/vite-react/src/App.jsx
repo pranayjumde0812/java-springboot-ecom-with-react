@@ -5,7 +5,12 @@ import ProfileCard from "./components/ProfileCard";
 import "./App.css";
 
 function App() {
-  const hobbies1 = ["Reading", "Traveling", 1];
+  // const hobbies1 = ["Reading", "Traveling", 1];
+
+  const handleHobbyClick = (hobby) => {
+    alert(`You clicked on hobby: ${hobby}`);
+  };
+  
   return (
     <>
       <div className="app-container">
