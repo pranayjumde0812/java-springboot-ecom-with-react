@@ -1,7 +1,7 @@
-function MyButton() {
+function MyButton({ actionName, onClick }) {
   return (
     <>
-      <button>Click Me</button>
+      <button onClick={onClick}>{actionName}</button>
     </>
   );
 }
