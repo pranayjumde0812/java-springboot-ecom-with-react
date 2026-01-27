@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 function ProfileCard({ name, age, isMember, hobbies }) {
   return (
     <>
-      <div>
+      <div className="profile-card">
         <h3>Name: {name}</h3>
         <h3>Age: {age}</h3>
         <h3>Status: {isMember ? "Active Member" : "Guest"}</h3>
