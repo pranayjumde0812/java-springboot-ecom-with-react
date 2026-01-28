@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import MyButton from "./components/MyButton";
-import "./App.css";
+// import "./App.css";
 import ProfileCard from "./components/ProfileCard";
-import "./App.css";
 import InputBox from "./components/InputBox";
+
+import "./Form.css";
 
 // function App() {
 //   const handleHobbyClick = (hobby) => {
@@ -94,41 +95,152 @@ import InputBox from "./components/InputBox";
 //   );
 // }
 
-////// Passing Array and Object to State //////
+// ////// Passing Array and Object to State //////
+
+// function App() {
+//   const [counters, setCounters] = useState([{ id: 1, value: 0 }]);
+
+//   const addCounters = () => {
+//     setCounters([...counters, { id: counters.length + 1, value: 0 }]);
+//   };
+
+//   const incrementCounter = (id) => {
+//     setCounters(
+//       counters.map((counter) =>
+//         counter.id === id ? { ...counter, value: counter.value + 1 } : counter,
+//       ),
+//     );
+//   };
+
+//   return (
+//     <>
+//       <div className="app-container">
+//         <button onClick={addCounters}>Add Counter</button>
+//         <ul>
+//           {counters.map((counter) => (
+//             <li key={counter.id}>
+//               Counter {counter.id}: {counter.value}
+//               <button
+//                 onClick={() => {
+//                   incrementCounter(counter.id);
+//                 }}
+//               >
+//                 Increment
+//               </button>
+//             </li>
+//           ))}
+//         </ul>
+//       </div>
+//     </>
+//   );
+// }
+
+/// Managing Form inputs with useState in React///
 
 function App() {
-  const [counters, setCounters] = useState([{ id: 1, value: 0 }]);
+  const [formData, setFormData] = useState({
+    text: "",
+    checkbox: false,
+    radio: "",
+    select: "",
+  });
 
-  const addCounters = () => {
-    setCounters([...counters, { id: counters.length + 1, value: 0 }]);
-  };
-
-  const incrementCounter = (id) => {
-    setCounters(
-      counters.map((counter) =>
-        counter.id === id ? { ...counter, value: counter.value + 1 } : counter,
-      ),
-    );
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
   return (
     <>
-      <div className="app-container">
-        <button onClick={addCounters}>Add Counter</button>
-        <ul>
-          {counters.map((counter) => (
-            <li key={counter.id}>
-              Counter {counter.id}: {counter.value}
-              <button
-                onClick={() => {
-                  incrementCounter(counter.id);
-                }}
-              >
-                Increment
-              </button>
-            </li>
-          ))}
-        </ul>
+      <div className="form-container">
+        <h1>Form Example</h1>
+        <form>
+          {/* Text Input */}
+          <div className="form-field">
+            <label>Text:</label>
+            <input
+              type="text"
+              name="text"
+              value={formData.text}
+              onChange={handleChange}
+            />
+          </div>
+
+          {/* Checkbox */}
+          <div className="form-field">
+            <label>
+              <input
+                type="checkbox"
+                name="checkbox"
+                checked={formData.checkbox}
+                onChange={handleChange}
+              ></input>
+              Checkbox
+            </label>
+          </div>
+
+          {/* Radio Buttons */}
+          <div className="form-field">
+            <label>Radio:</label>
+            <label>
+              <input
+                type="radio"
+                name="radio"
+                value="option1"
+                checked={formData.radio === "option1"}
+                onChange={handleChange}
+              />
+              option 1
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="radio"
+                value="option2"
+                checked={formData.radio === "option2"}
+                onChange={handleChange}
+              />
+              option 2
+            </label>
+          </div>
+
+          {/* Select Dropdown */}
+          <div className="form-field">
+            <label>Select:</label>
+            <select
+              name="select"
+              value={formData.select}
+              onChange={handleChange}
+            >
+              <option value="">--Please choose an option--</option>
+              <option value="option1">Option 1</option>
+              <option value="option2">Option 2</option>
+            </select>
+          </div>
+
+          <div className="form-data">
+            <h3>Form Data</h3>
+            <p>
+              <strong>Text: </strong>
+              {formData.text || "N/A"}
+            </p>
+            <p>
+              <strong>Checkbox: </strong>
+              {formData.checkbox === true ? "Checked" : "Unchecked"}
+            </p>
+            <p>
+              <strong>Radio: </strong>
+              {formData.radio || "N/A"}
+            </p>
+            <p>
+              <strong>Select Option: </strong>
+              {formData.select || "N/A"}
+            </p>
+          </div>
+        </form>
       </div>
     </>
   );
