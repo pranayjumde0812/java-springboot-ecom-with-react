@@ -1,10 +1,10 @@
-import { use, useState } from "react";
+import { useRef, useState } from "react";
 import MyButton from "./components/MyButton";
-// import "./App.css";
+import "./App.css";
 import ProfileCard from "./components/ProfileCard";
 import InputBox from "./components/InputBox";
 
-import "./Form.css";
+// import "./Form.css";
 
 // function App() {
 //   const handleHobbyClick = (hobby) => {
@@ -137,110 +137,137 @@ import "./Form.css";
 
 /// Managing Form inputs with useState in React///
 
+// function App() {
+//   const [formData, setFormData] = useState({
+//     text: "",
+//     checkbox: false,
+//     radio: "",
+//     select: "",
+//   });
+
+//   const handleChange = (e) => {
+//     const { name, value, type, checked } = e.target;
+//     setFormData({
+//       ...formData,
+//       [name]: type === "checkbox" ? checked : value,
+//     });
+//   };
+
+//   return (
+//     <>
+//       <div className="form-container">
+//         <h1>Form Example</h1>
+//         <form>
+//           {/* Text Input */}
+//           <div className="form-field">
+//             <label>Text:</label>
+//             <input
+//               type="text"
+//               name="text"
+//               value={formData.text}
+//               onChange={handleChange}
+//             />
+//           </div>
+
+//           {/* Checkbox */}
+//           <div className="form-field">
+//             <label>
+//               <input
+//                 type="checkbox"
+//                 name="checkbox"
+//                 checked={formData.checkbox}
+//                 onChange={handleChange}
+//               ></input>
+//               Checkbox
+//             </label>
+//           </div>
+
+//           {/* Radio Buttons */}
+//           <div className="form-field">
+//             <label>Radio:</label>
+//             <label>
+//               <input
+//                 type="radio"
+//                 name="radio"
+//                 value="option1"
+//                 checked={formData.radio === "option1"}
+//                 onChange={handleChange}
+//               />
+//               option 1
+//             </label>
+//             <label>
+//               <input
+//                 type="radio"
+//                 name="radio"
+//                 value="option2"
+//                 checked={formData.radio === "option2"}
+//                 onChange={handleChange}
+//               />
+//               option 2
+//             </label>
+//           </div>
+
+//           {/* Select Dropdown */}
+//           <div className="form-field">
+//             <label>Select:</label>
+//             <select
+//               name="select"
+//               value={formData.select}
+//               onChange={handleChange}
+//             >
+//               <option value="">--Please choose an option--</option>
+//               <option value="option1">Option 1</option>
+//               <option value="option2">Option 2</option>
+//             </select>
+//           </div>
+
+//           <div className="form-data">
+//             <h3>Form Data</h3>
+//             <p>
+//               <strong>Text: </strong>
+//               {formData.text || "N/A"}
+//             </p>
+//             <p>
+//               <strong>Checkbox: </strong>
+//               {formData.checkbox === true ? "Checked" : "Unchecked"}
+//             </p>
+//             <p>
+//               <strong>Radio: </strong>
+//               {formData.radio || "N/A"}
+//             </p>
+//             <p>
+//               <strong>Select Option: </strong>
+//               {formData.select || "N/A"}
+//             </p>
+//           </div>
+//         </form>
+//       </div>
+//     </>
+//   );
+// }
+
+// Use Ref Hook
+
 function App() {
-  const [formData, setFormData] = useState({
-    text: "",
-    checkbox: false,
-    radio: "",
-    select: "",
-  });
+  const [stateCount, setStateCount] = useState(0);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
-  };
+  const refCount = useRef(0);
 
+  console.log(refCount);
   return (
     <>
-      <div className="form-container">
-        <h1>Form Example</h1>
-        <form>
-          {/* Text Input */}
-          <div className="form-field">
-            <label>Text:</label>
-            <input
-              type="text"
-              name="text"
-              value={formData.text}
-              onChange={handleChange}
-            />
-          </div>
+      <div>
+        <p>State Count : {stateCount}</p>
+        <button onClick={() => setStateCount(stateCount + 1)}>
+          Increment State Count
+        </button>
 
-          {/* Checkbox */}
-          <div className="form-field">
-            <label>
-              <input
-                type="checkbox"
-                name="checkbox"
-                checked={formData.checkbox}
-                onChange={handleChange}
-              ></input>
-              Checkbox
-            </label>
-          </div>
+        <br />
 
-          {/* Radio Buttons */}
-          <div className="form-field">
-            <label>Radio:</label>
-            <label>
-              <input
-                type="radio"
-                name="radio"
-                value="option1"
-                checked={formData.radio === "option1"}
-                onChange={handleChange}
-              />
-              option 1
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="radio"
-                value="option2"
-                checked={formData.radio === "option2"}
-                onChange={handleChange}
-              />
-              option 2
-            </label>
-          </div>
-
-          {/* Select Dropdown */}
-          <div className="form-field">
-            <label>Select:</label>
-            <select
-              name="select"
-              value={formData.select}
-              onChange={handleChange}
-            >
-              <option value="">--Please choose an option--</option>
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-            </select>
-          </div>
-
-          <div className="form-data">
-            <h3>Form Data</h3>
-            <p>
-              <strong>Text: </strong>
-              {formData.text || "N/A"}
-            </p>
-            <p>
-              <strong>Checkbox: </strong>
-              {formData.checkbox === true ? "Checked" : "Unchecked"}
-            </p>
-            <p>
-              <strong>Radio: </strong>
-              {formData.radio || "N/A"}
-            </p>
-            <p>
-              <strong>Select Option: </strong>
-              {formData.select || "N/A"}
-            </p>
-          </div>
-        </form>
+        <p>Ref Count : {refCount.current}</p>
+        <button onClick={() => (refCount.current += 1)}>
+          Increment Ref Count
+        </button>
       </div>
     </>
   );
