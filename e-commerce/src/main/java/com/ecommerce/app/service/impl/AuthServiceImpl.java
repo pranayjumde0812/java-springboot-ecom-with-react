@@ -6,13 +6,17 @@ import com.ecommerce.app.model.User;
 import com.ecommerce.app.repository.RoleRepository;
 import com.ecommerce.app.repository.UserRepository;
 import com.ecommerce.app.security.request.SignupRequest;
+import com.ecommerce.app.security.response.UserInfoResponse;
+import com.ecommerce.app.security.services.UserDetailsImpl;
 import com.ecommerce.app.service.AuthService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -85,5 +89,32 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public boolean existByEmail(String email) {
         return userRepository.existsUserByEmail(email);
+    }
+
+    @Override
+    public String currentUserName(Authentication authentication) {
+
+        if (authentication != null)
+            return authentication.getName();
+        else
+            return "null";
+    }
+
+    @Override
+    public UserInfoResponse getUserDetails(Authentication authentication) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        List<String> roles = userDetails.getAuthorities()
+                .stream()
+                .map(item -> item.getAuthority())
+                .toList();
+
+        UserInfoResponse loginResponse = new UserInfoResponse(
+                userDetails.getId(),
+                userDetails.getUsername(),
+                roles
+        );
+
+        return loginResponse;
     }
 }
