@@ -10,7 +10,9 @@ import com.ecommerce.app.security.services.UserDetailsImpl;
 import com.ecommerce.app.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -63,7 +65,10 @@ public class AuthController {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        String jwtToken = jwtUtils.generateTokenFromUsername(userDetails);
+//        String jwtToken = jwtUtils.generateTokenFromUsername(userDetails.getUsername());
+
+        ResponseCookie jwtToken = jwtUtils.generateJwtCookie(userDetails);
+
         List<String> roles = userDetails.getAuthorities()
                 .stream()
                 .map(item -> item.getAuthority())
@@ -72,11 +77,12 @@ public class AuthController {
         UserInfoResponse loginResponse = new UserInfoResponse(
                 userDetails.getId(),
                 userDetails.getUsername(),
-                roles,
-                jwtToken
+                roles
         );
 
-        return new ResponseEntity<>(loginResponse, HttpStatus.OK);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, jwtToken.toString())
+                .body("Login Successful");
     }
 
     @PostMapping("/signup")

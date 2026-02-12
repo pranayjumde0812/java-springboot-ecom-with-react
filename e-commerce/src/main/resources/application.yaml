@@ -25,6 +25,7 @@ spring:
   app:
     jwtSecret: dictionary2224324uifbhfiuhbfud8958t948tihiuvhsudAHJDHJFJFNFJNJJJIJrigroeigurooisdjvdlnvjdnfkjsdhfiuehdfuidh
     jwtExpirationMS: 6000000000
+    jwtCookieName: springbootEcom
 
 logging:
   level:
