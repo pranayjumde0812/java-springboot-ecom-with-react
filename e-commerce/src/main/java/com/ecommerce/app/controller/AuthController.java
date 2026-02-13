@@ -79,7 +79,7 @@ public class AuthController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, jwtToken.toString())
-                .body("Login Successful");
+                .body(new MessageResponse("User logged in successfully!"));
     }
 
     @PostMapping("/signup")
