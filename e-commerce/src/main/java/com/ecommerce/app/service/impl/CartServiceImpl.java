@@ -96,6 +96,40 @@ public class CartServiceImpl implements CartService {
         return cartDTO;
     }
 
+    @Override
+    public List<CartDTO> getAllCarts() {
+        // Retrieve All Carts
+        List<Cart> carts = cartRepository.findAll();
+
+        List<CartDTO> cartDTOS = carts.stream()
+                .map(cart -> {
+                    CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
+
+                    List<ProductDTO> products = cart.getCartItems().stream()
+                            .map(product -> modelMapper.map(product.getProduct(), ProductDTO.class))
+                            .toList();
+
+                    cartDTO.setProducts(products);
+                    return cartDTO;
+                })
+                .toList();
+
+        return cartDTOS;
+    }
+
+    @Override
+    public CartDTO getUserCart(String email, Long cartId) {
+
+        Cart cart = cartRepository.findCartByEmailAndCartId(email, cartId);
+
+        if (cart == null) {
+            throw new ResourceNotFoundException("Cart", "cartId", cartId);
+        }
+        CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
+
+        return cartDTO;
+    }
+
     private Cart findOrCreateCart() {
         Cart userCart = cartRepository.findCartByEmail(authUtil.loggedInEmail());
 
