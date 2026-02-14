@@ -1,6 +1,7 @@
 package com.ecommerce.app.service;
 
 import com.ecommerce.app.dto.request.CartDTO;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -10,4 +11,7 @@ public interface CartService {
     List<CartDTO> getAllCarts();
 
     CartDTO getUserCart(String email, Long cartId);
+
+    @Transactional
+    CartDTO updateProductQuantityInCart(Long productId, Integer quantity);
 }
