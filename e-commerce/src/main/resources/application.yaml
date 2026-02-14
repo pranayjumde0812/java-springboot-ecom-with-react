@@ -6,21 +6,21 @@ spring:
     name: e-commerce-application
 
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username:
-    password:
+    url: jdbc:mysql://localhost:3306/e-commerce
+    #    driver-class-name:
+    username: root
+    password: root
 
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+  #  h2:
+  #    console:
+  #      enabled: true
+  #      path: /h2-console
 
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
 
   app:
     jwtSecret: dictionary2224324uifbhfiuhbfud8958t948tihiuvhsudAHJDHJFJFNFJNJJJIJrigroeigurooisdjvdlnvjdnfkjsdhfiuehdfuidh
