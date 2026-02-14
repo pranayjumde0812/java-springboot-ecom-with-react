@@ -127,6 +127,11 @@ public class CartServiceImpl implements CartService {
         }
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
+        List<ProductDTO> products = cart.getCartItems().stream()
+                .map(product -> modelMapper.map(product.getProduct(), ProductDTO.class))
+                .toList();
+        cartDTO.setProducts(products);
+
         return cartDTO;
     }
 

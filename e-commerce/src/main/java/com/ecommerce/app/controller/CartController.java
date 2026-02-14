@@ -31,6 +31,20 @@ public class CartController {
         return new ResponseEntity<>(cartDTO, HttpStatus.CREATED);
     }
 
+    @GetMapping("/users/cart")
+    public ResponseEntity<CartDTO> getCartByUserId() {
+        String email = authUtil.loggedInEmail();
+        Cart cart = cartRepository.findCartByEmail(email);
+
+        if (cart == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Long cartId = cart.getCartId();
+        CartDTO cartDTO = cartService.getUserCart(email, cartId);
+        return new ResponseEntity<>(cartDTO, HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<CartDTO>> getAllCarts() {
         List<CartDTO> allCarts = cartService.getAllCarts();
@@ -38,13 +52,4 @@ public class CartController {
         return new ResponseEntity<>(allCarts, HttpStatus.OK);
     }
 
-    @GetMapping("/users/cart")
-    public ResponseEntity<CartDTO> getCartByUserId() {
-        String email = authUtil.loggedInEmail();
-        Cart cart = cartRepository.findCartByEmail(email);
-
-        Long cartId = cart.getCartId();
-        CartDTO cartDTO = cartService.getUserCart(email, cartId);
-        return new ResponseEntity<>(cartDTO, HttpStatus.OK);
-    }
 }
