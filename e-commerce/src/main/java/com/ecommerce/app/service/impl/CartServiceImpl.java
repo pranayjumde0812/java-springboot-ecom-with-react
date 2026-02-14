@@ -15,8 +15,6 @@ import com.ecommerce.app.util.AuthUtil;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -109,7 +107,11 @@ public class CartServiceImpl implements CartService {
                     CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
                     List<ProductDTO> products = cart.getCartItems().stream()
-                            .map(product -> modelMapper.map(product.getProduct(), ProductDTO.class))
+                            .map(item -> {
+                                ProductDTO productDTO = modelMapper.map(item.getProduct(), ProductDTO.class);
+                                productDTO.setQuantity(item.getQuantity());
+                                return productDTO;
+                            })
                             .toList();
 
                     cartDTO.setProducts(products);
@@ -128,14 +130,20 @@ public class CartServiceImpl implements CartService {
         if (cart == null) {
             throw new ResourceNotFoundException("Cart", "cartId", cartId);
         }
-        CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
+
+        CartDTO cartDto = modelMapper.map(cart, CartDTO.class);
 
         List<ProductDTO> products = cart.getCartItems().stream()
-                .map(product -> modelMapper.map(product.getProduct(), ProductDTO.class))
+                .map(product -> {
+                    ProductDTO productDTO = modelMapper.map(product.getProduct(), ProductDTO.class);
+                    productDTO.setQuantity(product.getQuantity());
+                    return productDTO;
+                })
                 .toList();
-        cartDTO.setProducts(products);
 
-        return cartDTO;
+        cartDto.setProducts(products);
+
+        return cartDto;
     }
 
     @Override
@@ -167,12 +175,22 @@ public class CartServiceImpl implements CartService {
                     + " is not available in the cart.");
         }
 
-        cartItem.setProductPrice(product.getSpecialPrice());
-        cartItem.setQuantity(cartItem.getQuantity() + quantity);
-        cartItem.setDiscount(product.getDiscount());
-        cart.setTotalPrice(cart.getTotalPrice() + (cartItem.getProductPrice() * quantity));
+        int newQuantity = cartItem.getQuantity() + quantity;
 
-        cartRepository.save(cart);
+        if (newQuantity < 0) {
+            throw new APIException("The Resulting quantity cannot be negative");
+        }
+
+        if (newQuantity == 0) {
+            deleteProductFromCart(cart.getCartId(), productId);
+        } else {
+            cartItem.setProductPrice(product.getSpecialPrice());
+            cartItem.setQuantity(cartItem.getQuantity() + quantity);
+            cartItem.setDiscount(product.getDiscount());
+            cart.setTotalPrice(cart.getTotalPrice() + (cartItem.getProductPrice() * quantity));
+
+            cartRepository.save(cart);
+        }
 
         CartItem updatedCartItem = cartItemRepository.save(cartItem);
 
@@ -192,6 +210,24 @@ public class CartServiceImpl implements CartService {
         cartDto.setProducts(productStream.toList());
 
         return cartDto;
+    }
+
+    @Override
+    @Transactional
+    public String deleteProductFromCart(Long cartId, Long productId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart", "cartId", cartId));
+
+        CartItem cartItem = cartItemRepository.findCartItemByProductIdAndCartId(cartId, productId);
+
+        if (cartItem == null) {
+            throw new ResourceNotFoundException("Product", "productId", productId);
+        }
+
+        cart.setTotalPrice(cart.getTotalPrice() - (cartItem.getProductPrice() * cartItem.getQuantity()));
+
+        cartItemRepository.deleteCartItemByProductIdAndCartId(cartId, productId);
+        return "Product Removed from cart for ProductId : " + productId;
     }
 
     private Cart findOrCreateCart() {
