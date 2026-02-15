@@ -47,11 +47,16 @@ public class Address {
     private String zipcode;
 
 
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "addresses")
-    private List<User> users = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Address(String street, String buildingName, String city, String state, String country, String zipcode) {
+    public Address(String street,
+                   String buildingName,
+                   String city,
+                   String state,
+                   String country,
+                   String zipcode) {
         this.street = street;
         this.buildingName = buildingName;
         this.city = city;

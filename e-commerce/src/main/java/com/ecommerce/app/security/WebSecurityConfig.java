@@ -168,71 +168,71 @@ public class WebSecurityConfig {
                 );
     }
 
-    @Bean
-    public CommandLineRunner initData(RoleRepository roleRepository, UserRepository userRepository) {
-        return args -> {
-
-            Role roleAdmin = roleRepository.findByRoleName(AppRole.ROLE_ADMIN)
-                    .orElseGet(() -> {
-                                return roleRepository.save(new Role(AppRole.ROLE_ADMIN));
-                            }
-                    );
-
-            Role roleSeller = roleRepository.findByRoleName(AppRole.ROLE_SELLER)
-                    .orElseGet(() -> {
-                                return roleRepository.save(new Role(AppRole.ROLE_SELLER));
-                            }
-                    );
-
-            Role roleUser = roleRepository.findByRoleName(AppRole.ROLE_USER)
-                    .orElseGet(() -> {
-                                return roleRepository.save(new Role(AppRole.ROLE_USER));
-                            }
-                    );
-
-            Set<Role> userRoles = Set.of(roleUser);
-            Set<Role> sellerRoles = Set.of(roleSeller);
-            Set<Role> adminRoles = Set.of(roleUser, roleSeller, roleAdmin);
-
-
-            if (!userRepository.existsUserByUsername("user1")) {
-                User user1 = new User("user1",
-                        "user1@mailinator.com",
-                        passwordEncoder().encode("password"));
-                userRepository.save(user1);
-            }
-
-            if (!userRepository.existsUserByUsername("seller1")) {
-                User user1 = new User("seller",
-                        "seller1@mailinator.com",
-                        passwordEncoder().encode("password"));
-                userRepository.save(user1);
-            }
-
-            if (!userRepository.existsUserByUsername("admin")) {
-                User user1 = new User("admin",
-                        "admin@mailinator.com",
-                        passwordEncoder().encode("password"));
-                userRepository.save(user1);
-            }
-
-
-            // Update roles for existing users
-            userRepository.findByUsername("user1").ifPresent(user -> {
-                user.setRoles(userRoles);
-                userRepository.save(user);
-            });
-
-            userRepository.findByUsername("seller1").ifPresent(seller -> {
-                seller.setRoles(sellerRoles);
-                userRepository.save(seller);
-            });
-
-            userRepository.findByUsername("admin").ifPresent(admin -> {
-                admin.setRoles(adminRoles);
-                userRepository.save(admin);
-            });
-
-        };
-    }
+//    @Bean
+//    public CommandLineRunner initData(RoleRepository roleRepository, UserRepository userRepository) {
+//        return args -> {
+//
+//            Role roleAdmin = roleRepository.findByRoleName(AppRole.ROLE_ADMIN)
+//                    .orElseGet(() -> {
+//                                return roleRepository.save(new Role(AppRole.ROLE_ADMIN));
+//                            }
+//                    );
+//
+//            Role roleSeller = roleRepository.findByRoleName(AppRole.ROLE_SELLER)
+//                    .orElseGet(() -> {
+//                                return roleRepository.save(new Role(AppRole.ROLE_SELLER));
+//                            }
+//                    );
+//
+//            Role roleUser = roleRepository.findByRoleName(AppRole.ROLE_USER)
+//                    .orElseGet(() -> {
+//                                return roleRepository.save(new Role(AppRole.ROLE_USER));
+//                            }
+//                    );
+//
+//            Set<Role> userRoles = Set.of(roleUser);
+//            Set<Role> sellerRoles = Set.of(roleSeller);
+//            Set<Role> adminRoles = Set.of(roleUser, roleSeller, roleAdmin);
+//
+//
+//            if (!userRepository.existsUserByUsername("user1")) {
+//                User user1 = new User("user1",
+//                        "user1@mailinator.com",
+//                        passwordEncoder().encode("password"));
+//                userRepository.save(user1);
+//            }
+//
+//            if (!userRepository.existsUserByUsername("seller1")) {
+//                User user1 = new User("seller",
+//                        "seller1@mailinator.com",
+//                        passwordEncoder().encode("password"));
+//                userRepository.save(user1);
+//            }
+//
+//            if (!userRepository.existsUserByUsername("admin")) {
+//                User user1 = new User("admin",
+//                        "admin@mailinator.com",
+//                        passwordEncoder().encode("password"));
+//                userRepository.save(user1);
+//            }
+//
+//
+//            // Update roles for existing users
+//            userRepository.findByUsername("user1").ifPresent(user -> {
+//                user.setRoles(userRoles);
+//                userRepository.save(user);
+//            });
+//
+//            userRepository.findByUsername("seller1").ifPresent(seller -> {
+//                seller.setRoles(sellerRoles);
+//                userRepository.save(seller);
+//            });
+//
+//            userRepository.findByUsername("admin").ifPresent(admin -> {
+//                admin.setRoles(adminRoles);
+//                userRepository.save(admin);
+//            });
+//
+//        };
+//    }
 }

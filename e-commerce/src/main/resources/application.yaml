@@ -6,7 +6,7 @@ spring:
     name: e-commerce-application
 
   datasource:
-    url: jdbc:mysql://localhost:3306/e-commerce
+    url: jdbc:mysql://localhost:3306/e-commerce-app
     #    driver-class-name:
     username: root
     password: root
