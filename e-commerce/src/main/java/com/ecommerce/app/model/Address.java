@@ -39,7 +39,7 @@ public class Address {
     private String state;
 
     @NotBlank
-    @Size(min = 6, message = "Country name must be at least 6 characters")
+    @Size(min = 2, message = "Country name must be at least 2 characters")
     private String country;
 
     @NotBlank
