@@ -21,12 +21,27 @@ const ThemeContext = createContext("light");
 function App() {
   // const theme = "dark";
 
+  const [theme, setTheme] = useState("light");
+
+  const toggleTheme = () => {
+    setTheme(prevTheme => prevTheme === "light" ? "dark" : "light");
+  }
+
   return (
     <>
-      <div className="app" style={{ border: '2px solid black', padding: "20px", margin: "20px", textAlign: "center" }}>
-        <h2>App(parent) Component</h2>
-        <ComponentA />
-      </div>
+      <GlobalComponent />
+      <ThemeContext.Provider value={theme}>
+        <div className="app" style={{ border: '2px solid black', padding: "20px", margin: "20px", textAlign: "center" }}>
+          <h2>App(parent) Component</h2>
+          <button onClick={toggleTheme}>Toggle Theme</button>
+          <ComponentA />
+        </div>
+      </ThemeContext.Provider>
+
+      <br />
+      <ThemeContext.Provider value="dark">
+        <GlobalComponent />
+      </ThemeContext.Provider>
     </>
   )
 }
@@ -65,4 +80,15 @@ function ThemedComponent() {
   )
 }
 
+function GlobalComponent() {
+  const theme = useContext(ThemeContext);
+  return (
+    <>
+      <div className="app" style={{ border: '2px solid pink', padding: "20px", margin: "20px" }}>
+        <h2>GlobalComponent(OutSide of Provider) Component</h2>
+        <div>The current theme is = {theme}</div>
+      </div>
+    </>
+  )
+}
 export default App
