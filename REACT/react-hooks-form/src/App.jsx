@@ -9,8 +9,29 @@ function App() {
     password: ''
   })
 
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.name) {
+      errors.name = 'Name is required';
+    }
+    if (!formData.email) {
+      errors.email = 'Email is required';
+    }
+    if (!formData.password) {
+      errors.password = 'Password is required';
+    }
+    return errors;
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const errors = validateForm();
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      return;
+    }
     console.log(formData);
   }
 
@@ -32,6 +53,7 @@ function App() {
               id="name"
               name="name"
               onChange={handleChange} /> <br />
+            {errors.name && <span style={{ color: 'red' }}>{errors.name}</span>}
           </label>
 
           <label>Email :
@@ -40,6 +62,7 @@ function App() {
               id="email"
               name="email"
               onChange={handleChange} /> <br />
+            {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
           </label>
 
           <label>Password :
@@ -48,6 +71,7 @@ function App() {
               id="password"
               name="password"
               onChange={handleChange} /> <br />
+            {errors.password && <span style={{ color: 'red' }}>{errors.password}</span>}
           </label>
 
           <button type="submit">Submit</button>
