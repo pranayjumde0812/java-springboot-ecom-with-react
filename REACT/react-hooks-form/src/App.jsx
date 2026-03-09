@@ -36,11 +36,17 @@ function App() {
   }
 
   const handleChange = (e) => {
-    console.log(e.target.value);
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    })
+      [name]: value
+    });
+
+    if (errors[name]) {
+      const newErrors = { ...errors };
+      delete newErrors[name];
+      setErrors(newErrors);
+    }
   }
   return (
     <>
