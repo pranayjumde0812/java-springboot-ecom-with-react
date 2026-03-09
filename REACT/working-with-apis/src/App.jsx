@@ -2,6 +2,16 @@ import { useState, useEffect } from 'react'
 import axios from 'axios';
 import './App.css'
 
+
+axios.interceptors.request.use(request => {
+  console.log('Starting Request', request)
+  return request;
+})
+
+axios.interceptors.response.use(response => {
+  console.log('Response Received', response)
+  return response;
+})
 function App() {
 
   //   const [posts, setPosts] = useState([]);
