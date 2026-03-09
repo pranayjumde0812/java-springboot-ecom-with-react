@@ -1,84 +1,114 @@
 import { useState } from 'react';
+import { useForm } from "react-hook-form"
+
 import './App.css'
 
+// function App() {
+
+//   const [formData, setFormData] = useState({
+//     name: '',
+//     email: '',
+//     password: ''
+//   })
+
+//   const [errors, setErrors] = useState({});
+
+//   const validateForm = () => {
+//     const errors = {};
+//     if (!formData.name) {
+//       errors.name = 'Name is required';
+//     }
+//     if (!formData.email) {
+//       errors.email = 'Email is required';
+//     }
+//     if (!formData.password) {
+//       errors.password = 'Password is required';
+//     }
+//     return errors;
+//   }
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     const errors = validateForm();
+//     if (Object.keys(errors).length > 0) {
+//       setErrors(errors);
+//       return;
+//     }
+//     console.log(formData);
+//   }
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData({
+//       ...formData,
+//       [name]: value
+//     });
+
+//     if (errors[name]) {
+//       const newErrors = { ...errors };
+//       delete newErrors[name];
+//       setErrors(newErrors);
+//     }
+//   }
+//   return (
+//     <>
+//       <div>
+//         <h1>React Hooks Form</h1>
+//         <form onSubmit={handleSubmit}>
+//           <label>Name :
+//             <input
+//               type="text"
+//               id="name"
+//               name="name"
+//               onChange={handleChange} /> <br />
+//             {errors.name && <span style={{ color: 'red' }}>{errors.name}</span>}
+//           </label>
+
+//           <label>Email :
+//             <input
+//               type="email"
+//               id="email"
+//               name="email"
+//               onChange={handleChange} /> <br />
+//             {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
+//           </label>
+
+//           <label>Password :
+//             <input
+//               type="password"
+//               id="password"
+//               name="password"
+//               onChange={handleChange} /> <br />
+//             {errors.password && <span style={{ color: 'red' }}>{errors.password}</span>}
+//           </label>
+
+//           <button type="submit">Submit</button>
+//         </form>
+//       </div>
+//     </>
+//   )
+// }
+
 function App() {
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => console.log(data);
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: ''
-  })
-
-  const [errors, setErrors] = useState({});
-
-  const validateForm = () => {
-    const errors = {};
-    if (!formData.name) {
-      errors.name = 'Name is required';
-    }
-    if (!formData.email) {
-      errors.email = 'Email is required';
-    }
-    if (!formData.password) {
-      errors.password = 'Password is required';
-    }
-    return errors;
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const errors = validateForm();
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
-      return;
-    }
-    console.log(formData);
-  }
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-
-    if (errors[name]) {
-      const newErrors = { ...errors };
-      delete newErrors[name];
-      setErrors(newErrors);
-    }
-  }
   return (
     <>
       <div>
         <h1>React Hooks Form</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <label>Name :
-            <input
-              type="text"
-              id="name"
-              name="name"
-              onChange={handleChange} /> <br />
-            {errors.name && <span style={{ color: 'red' }}>{errors.name}</span>}
+            <input type="text" {...register("name")} />
           </label>
+
+          <br />
 
           <label>Email :
-            <input
-              type="email"
-              id="email"
-              name="email"
-              onChange={handleChange} /> <br />
-            {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
+            <input type="email" {...register("email")} />
           </label>
 
-          <label>Password :
-            <input
-              type="password"
-              id="password"
-              name="password"
-              onChange={handleChange} /> <br />
-            {errors.password && <span style={{ color: 'red' }}>{errors.password}</span>}
-          </label>
+          <br />
 
           <button type="submit">Submit</button>
         </form>
