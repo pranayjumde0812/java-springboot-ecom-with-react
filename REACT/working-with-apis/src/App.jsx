@@ -1,27 +1,7 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios';
 import './App.css'
+import api from './api/api';
 
-const API_BASE_URL = 'https://jsonplaceholder.typicode.com';
-
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'Authorization': 'Bearer <TOKEN>'
-  }
-})
-
-api.interceptors.request.use(request => {
-  console.log('Starting Request', request)
-  return request;
-})
-
-api.interceptors.response.use(response => {
-  console.log('Response Received', response)
-  return response;
-})
 function App() {
 
   //   const [posts, setPosts] = useState([]);
